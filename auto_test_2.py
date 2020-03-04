@@ -4,7 +4,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 class MainTests(unittest.TestCase):
-
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(ChromeDriverManager().install())
@@ -21,17 +20,36 @@ class MainTests(unittest.TestCase):
 
     def test_demo_login(self):
         driver = self.driver
-        driver.get('https://demobank.jaktestowac.pl/logowanie_etap_1.html')
+        url = "https://demobank.jaktestowac.pl/logowanie_etap_1.html"
+        driver.get(url)
         title = driver.title
-        print(f'Actual title of visited page: {title}')
-        assert title == 'Demobank - Bankowość Internetowa - Logowanie'
+        print(f'Actual title: {title}')
+        self.assertEqual('Demobank - Bankowość Internetowa - Logowanie', title,
+                         f'Expected title differs from actual for page url: {url}')
 
     def test_demo_accounts(self):
-        title = 20
-        print(f'Actual title: {title}')
-
-    def test_main_page(self):
         driver = self.driver
+        url = 'https://demobank.jaktestowac.pl/konta.html'
+        driver.get(url)
         title = driver.title
-        print(title)
-        assert 'Demobank - Bankowość Internetowa - Logowanie' == title
+        print(f'Actual title: {title}')
+        self.assertEqual('Demobank - Bankowość Internetowa - Konta', title,
+                         f'Expected title differs from actual for page url: {url}')
+
+    def test_demo_pulpit(self):
+        driver = self.driver
+        url = 'https://demobank.jaktestowac.pl/pulpit.html'
+        driver.get(url)
+        title = driver.title
+        print(f'Actual title: {title}')
+        self.assertEqual('Demobank - Bankowość Internetowa - Pulpit', title,
+                         f'Expected title differs from actual for page url: {url}')
+
+    def test_demo_transfer(self):
+        driver = self.driver
+        url = 'https://demobank.jaktestowac.pl/przelew_nowy_zew.html'
+        driver.get(url)
+        title = driver.title
+        print(f'Actual title: {title}')
+        self.assertEqual('Demobank - Bankowość Internetowa - Przelew', title,
+                         f'Expected title differs from actual for page url: {url}')

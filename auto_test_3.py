@@ -5,20 +5,19 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 class MainTests(unittest.TestCase):
     @classmethod
-    def setUpClass(self):
-        self.driver = webdriver.Chrome(ChromeDriverManager().install())
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome(ChromeDriverManager().install())
 
     def test_demo_login(self):
         driver = self.driver
-        site = 'https://demobank.jaktestowac.pl/logowanie_etap_1.html'
-        driver.get(site)
+        url = "https://demobank.jaktestowac.pl/logowanie_etap_1.html"
+        driver.get(url)
         title = driver.title
         print(f'Actual title: {title}')
         # assert 'Demobank - Bankowość Internetowa - Logowanie' == title
-        self.assertEqual(f'Demobank - Bankowość Internetowa - Logowanie', title,
-                         msg='Expected title differ from actual for page url: '
-                             f'{site}')
+        self.assertEqual('Demobank - Bankowość Internetowa - Logowanie', title,
+                         f'Expected title differ from actual for page url: {url}')
 
     @classmethod
-    def tearDownClass(self):
-        self.driver.quit()
+    def tearDownClass(cls):
+        cls.driver.quit()
