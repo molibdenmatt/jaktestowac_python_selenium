@@ -28,6 +28,7 @@ def wait_for_elements(driver, xpath, time_to_wait=5, number_of_expected_elements
 def visibility_of_element_wait(driver, element_xpath, timeout=10):
     """
     Checking if specified by xpath element is visible on the page
+    Using selenium wait
     :param timeout: Max time to wait (default: 10)
     :param driver: Webdriver object
     :param element_xpath: Xpath for the element to be visible
@@ -40,19 +41,3 @@ def visibility_of_element_wait(driver, element_xpath, timeout=10):
 
     return wait.until(element_located, error_message)
 
-
-def visibility_of_all_elements_wait(driver, element_xpath, timeout=10):
-    """
-    Checking if specified by xpath element is visible on the page
-    Using selenium wait
-    :param timeout: Max time to wait (default: 10)
-    :param driver: Webdriver object
-    :param element_xpath: Xpath for the element to be visible
-    :return: found element or error_message
-    """
-    error_message = f'Element {element_xpath} not found on {driver.current_url}'
-    locator = (By.XPATH, element_xpath)
-    element_located = ec.visibility_of_all_elements_located(locator)
-    wait = WebDriverWait(driver, timeout)
-
-    return wait.until(element_located, error_message)

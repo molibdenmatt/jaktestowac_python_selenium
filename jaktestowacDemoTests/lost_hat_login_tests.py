@@ -5,7 +5,6 @@ from helpers import functional_helpers
 
 
 class LostHatLoginTests(unittest.TestCase):
-
     @classmethod
     def setUp(self):  # Runs before each test
         self.driver = webdriver.Chrome(ChromeDriverManager().install())

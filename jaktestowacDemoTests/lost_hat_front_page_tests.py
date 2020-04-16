@@ -1,7 +1,7 @@
 import unittest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
-from helpers import functional_helpers
+from helpers import operational_helpers as oh
 
 
 class LostHatFrontPageTests(unittest.TestCase):
@@ -61,3 +61,15 @@ class LostHatFrontPageTests(unittest.TestCase):
         class_name = "product-miniature.js-product-miniature"
         items_list = driver.find_elements_by_class_name(class_name)
         self.assertEqual(expected_number_of_items, len(items_list))
+
+    def test_promo_elements_currency(self):
+        driver = self.driver
+        driver.get(self.main_page)
+
+        front_page_product_currency = '//*[@class="price"]'
+        list_of_visible_products = oh.visibility_of_all_elements_wait(driver, front_page_product_currency)
+
+        for product in list_of_visible_products:
+            with self.subTest(product):
+                self.assertIn('PLN', product.text)
+

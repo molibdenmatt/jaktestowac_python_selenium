@@ -1,12 +1,10 @@
 import unittest
-import time
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from helpers import operational_helpers as oh
 
 
-class LostHatProductTests(unittest.TestCase):
-
+class LostHatBasketTests(unittest.TestCase):
     @classmethod
     def setUp(self):  # Runs before each test
         self.driver = webdriver.Chrome(ChromeDriverManager().install())
@@ -33,19 +31,20 @@ class LostHatProductTests(unittest.TestCase):
         driver.get(self.art_page)
         fox_vector_product = driver.find_element_by_xpath('//*[text() = "Mountain fox - Vector graphics"]')
         fox_vector_product.click()
-        time.sleep(2)
-        add_to_cart_button = driver.find_element_by_xpath('//button[@data-button-action="add-to-cart"]')
+
+        add_to_cart_button_xpath = '//button[@data-button-action="add-to-cart"]'
+        add_to_cart_button = oh.visibility_of_element_wait(driver, add_to_cart_button_xpath)
         add_to_cart_button.click()
+
         modal_success_xpath = '//*[@id="myModalLabel"]'
         expected_success_alert = 'Product successfully added to your shopping cart'
 
+        # Using custom wait method:
         # confirmation_modal_elements = oh.wait_for_elements(driver, modal_success_xpath, 5)
         # success_text = confirmation_modal_elements[0].text
+
         confirmation_modal_elements = oh.visibility_of_element_wait(driver, modal_success_xpath)
-
-        success_text = confirmation_modal_elements.text
-
-        self.assertEqual(expected_success_alert, success_text)
+        self.assertEqual(expected_success_alert, confirmation_modal_elements.text)
 
 
 
